@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Suggestion Chatbot</title>
+    <link rel="icon" href="static/354bf71208671163b57dd7109211dec4.ico/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="static/styles/chat.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="title">Recipe Suggestion Chatbot</div>
+        <div class="box" id="chat-box">
+            <!-- Messages will be dynamically added here -->
+        </div>
+
+        <div class="typing-area">
+            <div class="input-field">
+                <input type="text" id="ingredients" placeholder="Enter ingredients (comma separated)" required>
+                <button id="send-message">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Event listener for sending messages
+        document.getElementById('send-message').addEventListener('click', function() {
+            const ingredients = document.getElementById('ingredients').value.trim();
+            if (!ingredients) {
+                alert('Please enter some ingredients.');
+                return; // Prevent sending empty messages
+            }
+
+            addMessage(ingredients, 'right'); // Add user's message to chat
+            document.getElementById('ingredients').value = ''; // Clear input field
+
+            // Fetch recipes based on ingredients
+            fetch('/get_recipes', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ingredients: ingredients }) // Send as JSON
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    addMessage(data.error, 'left'); // Show error message from chatbot
+                } else {
+                    data.forEach(recipe => {
+                        addMessage(
+                            `<div>
+                                <strong>${recipe.title}</strong><br>
+                                <a href="/recipe/${recipe.id}" target="_blank">
+                                    <img src="${recipe.image}" alt="${recipe.title}" class="chat-image">
+                                </a>
+                            </div>`,
+                            'left'
+                        );
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                addMessage('An error occurred while fetching recipes.', 'left'); // Show generic error message
+            });
+        });
+
+        // Function to add messages to the chat box
+        function addMessage(message, side) {
+            const chatBox = document.getElementById('chat-box');
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('item');
+            if (side === 'right') {
+                messageDiv.classList.add('right');
+            }
+            messageDiv.innerHTML = `<div class="msg">${message}</div>`;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the bottom
+        }
+
+        // Handle pressing Enter to send messages
+        document.getElementById('ingredients').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                document.getElementById('send-message').click(); // Trigger button click
+            }
+        });
+    </script>
+</body>
+</html>

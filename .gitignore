@@ -1,0 +1,54 @@
+
+### `.gitignore`
+
+```gitignore
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Packages
+venv/
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+var/
+sdist/
+wheels/
+*.pip
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Flask specific files
+instance/
+.env
+
+# Pytest and coverage reports
+.cache/
+.coverage
+coverage.xml
+*.cover
+.hypothesis/
+pytestdebug.log
+
+# PyCharm and IDE specific files
+.idea/
+.vscode/
+*.swp
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Other backups
+*.bak
+*.backup

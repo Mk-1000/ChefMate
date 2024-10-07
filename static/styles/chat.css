@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+}
+
+.wrapper {
+    width: 100%;
+    max-width: 900px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.title {
+    background: #007bff;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 24px;
+}
+
+.box {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    max-height: calc(100vh - 160px); /* Accounts for title and typing area */
+}
+
+.item {
+    display: flex;
+    justify-content: flex-start;
+    margin: 10px 0;
+}
+
+.item.right {
+    justify-content: flex-end;
+}
+
+.msg {
+    background: #007bff;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 80%;
+}
+
+.item.right .msg {
+    background: #efefef;
+    color: #333;
+}
+
+.typing-area {
+    width: 100%;
+    background: #efefef;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.input-field {
+    flex-grow: 1;
+    position: relative;
+    display: flex;
+}
+
+.input-field input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+}
+
+.input-field button {
+    margin-left: 10px;
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.input-field button:hover {
+    background: #0056b3;
+}
+
+.chat-image {
+    width: 100px;
+    height: auto;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+@media (max-width: 600px) {
+    .wrapper {
+        padding: 10px;
+    }
+
+    .input-field button {
+        width: 80px;
+    }
+
+    .chat-image {
+        width: 80px;
+    }
+}
