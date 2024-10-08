@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recipe Suggestion Chatbot</title>
-    <link rel="icon" href="static/354bf71208671163b57dd7109211dec4.ico/favicon.ico">
+    <link rel="icon" href="static/logo/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
     <link rel="stylesheet" href="static/styles/chat.css">
 </head>
@@ -15,6 +15,12 @@
             <!-- Messages will be dynamically added here -->
         </div>
 
+        <div class="ingredients-container">
+            <div id="ingredient-list" class="scrollable-ingredients">
+                <!-- List of ingredients will be dynamically added here -->
+            </div>
+        </div>        
+
         <div class="typing-area">
             <div class="input-field">
                 <input type="text" id="ingredients" placeholder="Enter ingredients (comma separated)" required>
@@ -24,6 +30,52 @@
     </div>
 
     <script>
+        // Sample list of ingredients
+        const ingredientsList = [
+            "Carrot", "Cucumber", "Potato", "Spinach", "Broccoli", "Egg", "Beef", "Pork",
+            "Lemon", "Avocado", "Tomato", "Onion", "Garlic", "Cheese", "Pepper", "Chicken",
+            "Basil", "Mushrooms", "Rice", "Quinoa", "Pasta", "Zucchini", "Bell Pepper",
+            "Lettuce", "Cauliflower", "Eggplant", "Sweet Potato", "Pumpkin", "Radish",
+            "Green Beans", "Asparagus", "Peas", "Kale", "Cabbage", "Chickpeas", "Lentils",
+            "Tofu", "Salmon", "Shrimp", "Turkey", "Sausage", "Pineapple", "Strawberries",
+            "Blueberries", "Banana", "Peach", "Mango", "Kiwi", "Orange", "Grapes", "Raspberry",
+            "Blackberry", "Coconut", "Almond", "Walnut", "Hazelnut", "Pistachio", "Peanut",
+            "Soy Sauce", "Olive Oil", "Vinegar", "Honey", "Mustard", "Ketchup", "Mayonnaise",
+            "Chili Powder", "Cinnamon", "Oregano", "Thyme", "Rosemary", "Parsley", "Cilantro",
+            "Ginger", "Turmeric", "Paprika", "Nutmeg", "Cardamom", "Vanilla", "Brown Sugar",
+            "White Sugar", "Flour", "Baking Powder", "Baking Soda", "Yeast", "Cocoa Powder"
+        ];
+
+        // Populate ingredient list dynamically
+        const ingredientContainer = document.getElementById('ingredient-list');
+
+        ingredientsList.forEach(ingredient => {
+            const ingredientItem = document.createElement('div');
+            ingredientItem.classList.add('ingredient-item');
+            ingredientItem.textContent = ingredient;
+            ingredientContainer.appendChild(ingredientItem);
+
+            // Add click event to append ingredient to input box and remove it from list
+            ingredientItem.addEventListener('click', function() {
+                addIngredientToInput(ingredientItem);
+            });
+        });
+
+        // Function to add clicked ingredient to the input field
+        function addIngredientToInput(item) {
+            const inputField = document.getElementById('ingredients');
+            const ingredientValue = item.textContent.trim();
+
+            if (inputField.value.length > 0) {
+                inputField.value += `, ${ingredientValue}`;
+            } else {
+                inputField.value = ingredientValue;
+            }
+
+            // Remove ingredient from the list after it is added
+            item.remove();
+        }
+
         // Event listener for sending messages
         document.getElementById('send-message').addEventListener('click', function() {
             const ingredients = document.getElementById('ingredients').value.trim();
@@ -34,6 +86,7 @@
 
             addMessage(ingredients, 'right'); // Add user's message to chat
             document.getElementById('ingredients').value = ''; // Clear input field
+            showTypingIndicator(); // Show typing indicator
 
             // Fetch recipes based on ingredients
             fetch('/get_recipes', {
@@ -43,9 +96,14 @@
             })
             .then(response => response.json())
             .then(data => {
+                removeTypingIndicator(); // Remove typing indicator
+
                 if (data.error) {
-                    addMessage(data.error, 'left'); // Show error message from chatbot
+                    addMessage(`<strong>Error:</strong> ${data.error}`, 'left'); // Show error message from chatbot
                 } else {
+                    if (data.length === 0) {
+                        addMessage('No recipes found.', 'left'); // No recipes found case
+                    }
                     data.forEach(recipe => {
                         addMessage(
                             `<div>
@@ -61,7 +119,8 @@
             })
             .catch(error => {
                 console.error('Error:', error);
-                addMessage('An error occurred while fetching recipes.', 'left'); // Show generic error message
+                removeTypingIndicator();
+                addMessage('<strong>Error:</strong> Unable to fetch recipes.', 'left'); // Show generic error message
             });
         });
 
@@ -76,6 +135,25 @@
             messageDiv.innerHTML = `<div class="msg">${message}</div>`;
             chatBox.appendChild(messageDiv);
             chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the bottom
+        }
+
+        // Show typing indicator while fetching recipes
+        function showTypingIndicator() {
+            const chatBox = document.getElementById('chat-box');
+            const typingIndicator = document.createElement('div');
+            typingIndicator.classList.add('typing-indicator');
+            typingIndicator.innerText = 'Chatbot is typing...';
+            typingIndicator.id = 'typing-indicator';
+            chatBox.appendChild(typingIndicator);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // Remove typing indicator once response is received
+        function removeTypingIndicator() {
+            const typingIndicator = document.getElementById('typing-indicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
         }
 
         // Handle pressing Enter to send messages
