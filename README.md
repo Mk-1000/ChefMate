@@ -66,7 +66,7 @@ Copier le code
 ├── static/              # Static files (CSS, images, etc.)
 ├── templates/           # HTML templates for rendering pages
 ├── venv/                # Python virtual environment (not included in repo)
-├── __pycache__/         # Cache files (auto-generated)
+
 API Integration
 ChefMate uses the Spoonacular API to retrieve recipes. Ensure that you have a valid API key and that it is properly configured in the app.py file. ChefMate interacts with the following API endpoints:
 
