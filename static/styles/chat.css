@@ -28,12 +28,19 @@ body {
 }
 
 .title {
+    display: flex; /* Use flexbox for alignment */
+    justify-content: center; /* Center items horizontally */
+    align-items: center; /* Center items vertically */
     background: #7f7de9; /* Updated to primary color */
     color: white;
     padding: 15px;
     border-radius: 5px;
-    text-align: center;
     font-size: 24px;
+}
+
+.title img {
+    height: 48px; /* Adjust the height as needed */
+    margin-right: 10px; /* Space between image and text */
 }
 
 .box {

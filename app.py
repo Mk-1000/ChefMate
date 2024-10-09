@@ -69,7 +69,7 @@ def get_recipes():
     ingredients = extract_ingredients(user_input)
 
     # Log extracted ingredients for debugging
-    print(f"Extracted ingredients: {ingredients}")
+    # print(f"Extracted ingredients: {ingredients}")
 
     # Check if any ingredients were extracted
     if not ingredients:
@@ -82,7 +82,7 @@ def get_recipes():
     )
 
     # Log the API response for debugging
-    print(f"API Response: {response.status_code} - {response.text}")
+    # print(f"API Response: {response.status_code} - {response.text}")
 
     if response.status_code == 200:
         recipes = response.json()

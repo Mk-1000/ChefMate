@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ recipe.title }}</title>
-    <link rel="icon" href="static/logo/favicon.ico">
+    <link rel="icon" href="/static/logo/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
     <link rel="stylesheet" href="/static/styles/details.css">
 </head>
@@ -12,16 +12,17 @@
     <div class="recipe-details">
         <h1>{{ recipe.title }}</h1>
         <img src="{{ recipe.image }}" alt="{{ recipe.title }}">
-        
+
         <div class="icon-text">
             <i class="fa fa-clock-o"></i>
             <p><strong>Ready in:</strong> {{ recipe.readyInMinutes }} minutes</p>
         </div>
+        
         <div class="icon-text">
             <i class="fa fa-users"></i>
             <p><strong>Servings:</strong> {{ recipe.servings }}</p>
         </div>
-        
+
         <h3>Ingredients</h3>
         <ul>
             {% for ingredient in recipe.extendedIngredients %}
@@ -30,7 +31,7 @@
         </ul>
 
         <h3>Instructions</h3>
-        <p>{{ recipe.instructions }}</p>
+        <div class="instructions">{{ recipe.instructions | safe }}</div>
 
         <a href="/"><i class="fa fa-arrow-left"></i> Back to Chat</a>
     </div>
