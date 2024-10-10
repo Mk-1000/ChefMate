@@ -25,22 +25,24 @@ body {
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
+    overflow: hidden; /* Prevents overflow */
 }
 
 .title {
-    display: flex; /* Use flexbox for alignment */
-    justify-content: center; /* Center items horizontally */
-    align-items: center; /* Center items vertically */
-    background: #7f7de9; /* Updated to primary color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #7f7de9;
     color: white;
     padding: 15px;
     border-radius: 5px;
     font-size: 24px;
+    text-align: center;
 }
 
 .title img {
-    height: 48px; /* Adjust the height as needed */
-    margin-right: 10px; /* Space between image and text */
+    height: 48px;
+    margin-right: 10px;
 }
 
 .box {
@@ -54,6 +56,7 @@ body {
     display: flex;
     justify-content: flex-start;
     margin: 10px 0;
+    word-wrap: break-word; /* Allows long words to break */
 }
 
 .item.right {
@@ -61,11 +64,12 @@ body {
 }
 
 .msg {
-    background: #7f7de9; /* Updated to primary color */
+    background: #7f7de9;
     color: white;
     padding: 10px;
     border-radius: 10px;
     max-width: 80%;
+    word-wrap: break-word; /* Allows long words to break */
 }
 
 .item.right .msg {
@@ -79,12 +83,14 @@ body {
     padding: 15px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .input-field {
     flex-grow: 1;
-    position: relative;
     display: flex;
+    align-items: center;
 }
 
 .input-field input {
@@ -93,12 +99,12 @@ body {
     border: 1px solid #ddd;
     border-radius: 5px;
     outline: none;
+    margin-right: 10px; /* Adds space between input and button */
 }
 
 .input-field button {
-    margin-left: 10px;
     padding: 10px 20px;
-    background: #7f7de9; /* Updated to primary color */
+    background: #7f7de9;
     color: white;
     border: none;
     border-radius: 5px;
@@ -107,7 +113,7 @@ body {
 }
 
 .input-field button:hover {
-    background: #6e6ac9; /* Darker shade of primary color for hover */
+    background: #6e6ac9;
 }
 
 .chat-image {
@@ -117,7 +123,6 @@ body {
     margin-top: 10px;
 }
 
-/* Add styles for the ingredient container to allow horizontal scrolling */
 .scrollable-ingredients {
     display: flex;
     flex-wrap: nowrap;
@@ -139,7 +144,6 @@ body {
     background: #f1f1f1;
 }
 
-/* Style the ingredient items as buttons */
 .ingredient-item {
     display: inline-block;
     background-color: #f0f0f0;
@@ -160,14 +164,17 @@ body {
     background-color: #ccc;
 }
 
-/* Optional: Add a title for better alignment */
 .ingredients-container h3 {
     margin-bottom: 10px;
 }
 
-
 @media (max-width: 600px) {
     .wrapper {
+        padding: 10px;
+    }
+
+    .title {
+        font-size: 20px;
         padding: 10px;
     }
 
@@ -177,5 +184,17 @@ body {
 
     .chat-image {
         width: 80px;
+    }
+
+    .msg {
+        max-width: 100%;
+    }
+
+    .ingredient-item {
+        padding: 5px 10px;
+    }
+
+    .scrollable-ingredients {
+        padding: 5px;
     }
 }
