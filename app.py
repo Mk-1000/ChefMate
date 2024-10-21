@@ -5,7 +5,7 @@ from nlp_utils import extract_ingredients
 app = Flask(__name__)
 
 # Replace with your Spoonacular API key
-SPOONACULAR_API_KEY = 'f29eba11f9184a16bb5a68766be706c1'
+SPOONACULAR_API_KEY = 'Your-Spoonacular-API-key'
 SPOONACULAR_BASE_URL = 'https://api.spoonacular.com/recipes/'
 
 @app.route('/')
